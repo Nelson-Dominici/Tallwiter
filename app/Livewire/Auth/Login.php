@@ -22,15 +22,23 @@ class Login extends Component
     #[Validate('bail|required|string|min:6|max:255')]
     public string $password;
 
+    #[Validate('bail|present|boolean|nullable')]
+    public string $remember;
+
     public function login(): Redirector|RedirectResponse
     {
-        if (!auth()->attempt($this->validate())) {
+        $email = $this->validate()['email'];
+        $password = $this->validate()['password'];
+        $remember = $this->validate()['remember'];
 
-            $this->addError('Incorrect Credentials', 'The email or password is incorrect.');
+        if (!auth()->attempt(['email' => $email, 'password' => $password], $remember)) {
+
+            $this->addError('email', 'The email or password is incorrect.');
+            $this->addError('password', 'The email or password is incorrect.');
 
             return redirect()->back();
         }
 
-        return redirect()->route('home.dashboard');
+        return redirect()->route('dashboard.home');
     }
 }
