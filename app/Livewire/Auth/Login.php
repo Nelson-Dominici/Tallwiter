@@ -29,9 +29,11 @@ class Login extends Component
 
     public function login(): null|RedirectResponse
     {
-        $email = $this->validate()['email'];
-        $password = $this->validate()['password'];
-        $remember = $this->validate()['remember'];
+        $validated_body = $this->validate();
+
+        $email = $validated_body['email'];
+        $password = $validated_body['password'];
+        $remember = $validated_body['remember'];
 
         if (!auth()->attempt(['email' => $email, 'password' => $password], $remember)) {
 

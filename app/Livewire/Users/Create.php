@@ -11,11 +11,13 @@ use Livewire\Attributes\{
     Validate
 };
 
-use Livewire\Features\SupportRedirects\Redirector;
+use TallStackUi\Traits\Interactions;
 
 #[Title('Create User')]
 class Create extends Component
 {
+    use Interactions;
+
     #[Validate('bail|required|string|min:3|max:255')]
     public string $name;
 
@@ -25,10 +27,14 @@ class Create extends Component
     #[Validate('bail|required|string|min:6|max:255')]
     public string $password;
 
-    public function save(): Redirector
+    public function save()
     {
-        User::create($this->validate());
+        $validated_body = $this->validate();
 
-        return redirect()->route('auth.login');
+        User::create($validated_body);
+
+        $this->toast()->timeout()->success('User Created')->send();
+
+        return $this->redirect('/auth/login', navigate: true);
     }
 }
