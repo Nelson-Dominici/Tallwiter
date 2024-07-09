@@ -11,11 +11,13 @@ use Livewire\Attributes\{
 
 use Illuminate\Http\RedirectResponse;
 
-use Livewire\Features\SupportRedirects\Redirector;
+use TallStackUi\Traits\Interactions;
 
 #[Title('Login')]
 class Login extends Component
 {
+    use Interactions;
+
     #[Validate('bail|required|string|min:3|max:255')]
     public string $email;
 
@@ -25,7 +27,7 @@ class Login extends Component
     #[Validate('bail|present|boolean|nullable')]
     public string $remember;
 
-    public function login(): Redirector|RedirectResponse
+    public function login(): null|RedirectResponse
     {
         $email = $this->validate()['email'];
         $password = $this->validate()['password'];
@@ -39,6 +41,8 @@ class Login extends Component
             return redirect()->back();
         }
 
-        return redirect()->route('dashboard.home');
+        $this->toast()->success('User logged in successfully')->send();
+
+        return $this->redirect('/home', navigate: true);
     }
 }
