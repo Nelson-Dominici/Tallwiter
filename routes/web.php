@@ -2,14 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Livewire\Auth\Login;
+
+use App\Livewire\Dashboard\Home;
+
 use App\Livewire\Users\Create as UserCreate;
 
-use App\Livewire\Home\{
-    Profile as HomeProfile,
-    Dashboard as HomeDashboard
-};
-
-use App\Livewire\Auth\Login;
 
 Route::prefix('users')->group(function() {
 
@@ -23,9 +21,8 @@ Route::prefix('auth')->group(function() {
 
 });
 
-Route::prefix('home')->middleware('auth')->group(function() {
+Route::middleware('auth')->group(function() {
 
-    Route::get('/profile', HomeProfile::class)->name('home.profile');
-    Route::get('/dashboard', HomeDashboard::class)->name('home.dashboard');
+    Route::get('home/{filter}', Home::class)->name('home');
 
 });
