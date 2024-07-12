@@ -1,4 +1,4 @@
-<div class='flex w-full h-full items-center justify-center'>
+<div class='flex w-full h-screen items-center justify-center'>
 
     <form wire:submit='login' class='px-6 flex flex-col items-center justify-center phone:w-96 w-full'>
 
@@ -20,7 +20,7 @@
             Enter
         </x-button>
 
-        <p class="mt-5 font-semibold text-commonTextColor">
+        <p class="mt-5 font-semibold text-secondary">
             Don't have an <a wire:navigate class="text-primary decoration-1" href='{{ route("users.create") }}'>account</a>  yet?
         </p>
 

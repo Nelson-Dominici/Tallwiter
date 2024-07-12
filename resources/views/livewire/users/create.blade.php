@@ -1,4 +1,4 @@
-<div class='flex w-full h-full items-center justify-center'>
+<div class='flex w-full h-screen items-center justify-center'>
 
     <form wire:submit='save' class='px-6 flex flex-col items-center justify-center phone:w-96 w-full'>
 
@@ -20,7 +20,7 @@
             Create
         </x-button>
 
-        <p class='mt-6 font-semibold text-commonTextColor'>
+        <p class='mt-6 font-semibold text-secondary'>
             Do you already have an <a wire:navigate class='text-primary' href='{{ route("auth.login")}}'>account</a> ?
         </p>
 
