@@ -20,8 +20,7 @@ export default {
         extend: {
             colors: {
                 primary: '#51B9F5',
-                secondary: '#E66AA9',
-                commonTextColor: '#111827'
+                secondary: '#111827'
             },
             fontFamily: {
             'questrial': 'Questrial',
