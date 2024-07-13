@@ -8,7 +8,6 @@ use App\Livewire\Dashboard\Home;
 
 use App\Livewire\Users\Create as UserCreate;
 
-
 Route::prefix('users')->group(function() {
 
     Route::get('create', UserCreate::class)->name('users.create');
@@ -23,6 +22,6 @@ Route::prefix('auth')->group(function() {
 
 Route::middleware('auth')->group(function() {
 
-    Route::get('home/{filter}', Home::class)->name('home');
+    Route::get('home', Home::class)->name('home');
 
 });
