@@ -9,7 +9,13 @@
         <tallstackui:script />
         @vite('resources/css/tailwind.css')
     </head>
-    <body class="font-questrial h-screen bg-red">
+    <body>
+
+        @persist('toast')
+            <x-toast />
+        @endpersist
+
         {{ $slot }}
+
     </body>
 </html>
