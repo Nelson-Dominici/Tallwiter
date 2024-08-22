@@ -3,16 +3,17 @@
 namespace App\Livewire\Comment;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use TallStackUi\Traits\Interactions;
 
 class Create extends Component
 {
-    #[Validate('bail|required|string|min:3|max:255')]
+    #[Validate('bail|required|string|max:255')]
     public string $text;
 
-    public $post;
+    public Post $post;
 
     use Interactions;
 
@@ -24,12 +25,10 @@ class Create extends Component
             'text' => $this->validate()['text']
         ];
 
-        Comment::create($body);
+        $comment = Comment::create($body);
 
         $this->reset(['text']);
 
-        $this->toast()->success('Comment added successfully')->send();
-
-        $this->dispatch('comment-created');
+        $this->dispatch('comment-created.'.$this->post->id, comment: $comment);
     }
 }

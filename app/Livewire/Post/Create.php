@@ -1,24 +1,14 @@
 <?php
 
-namespace App\Livewire\Dashboard;
+namespace App\Livewire\Post;
 
 use App\Models\Post;
-
+use Livewire\Attributes\Validate;
 use Livewire\Component;
-
-use Livewire\Attributes\{
-    Title,
-    Validate
-};
-
-use Illuminate\Http\Request;
-
 use Livewire\WithFileUploads;
-
 use TallStackUi\Traits\Interactions;
 
-#[Title('Home')]
-class Home extends Component
+class Create extends Component
 {
     use Interactions;
     use WithFileUploads;
@@ -32,24 +22,7 @@ class Home extends Component
     #[Validate('bail|present|boolean|nullable')]
     public bool $only_followers;
 
-    public function render(Request $request)
-    {
-        $query = Post::with('user');
-
-        if (request('filter') == 'following') {
-            $query
-                ->where('only_followers', 1)
-                ->where('user_id', '!==', auth()->user()->id);
-        } else {
-            $query->where('only_followers', 0);
-        }
-
-        $posts = $query->cursorPaginate(5);
-
-        return view('livewire.dashboard.home', compact('posts'));
-    }
-
-    public function savePost()
+    public function create(): void
     {
         $data = $this->validate();
 
@@ -62,7 +35,6 @@ class Home extends Component
         }
 
         if ($data['photo']) {
-
             $data['img_secure_url'] = $data['photo']->storeOnCloudinary()->getSecurePath();
         }
 
@@ -70,6 +42,8 @@ class Home extends Component
 
         $this->toast()->success('Post created successfully')->send();
 
-        $this->reset(['text', 'photo', 'only_followers']);
+        $this->reset();
+
+        $this->dispatch('post-created');
     }
 }
