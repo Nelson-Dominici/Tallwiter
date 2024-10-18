@@ -13,11 +13,17 @@
 >
     <form wire:submit='create' class='flex h-fit border-b p-5'>
 
-        <div class='w-10 h-10 bg-primary mt-1 rounded-full flex items-center justify-center mr-4'>
+        <div class='size-11 bg-primary mt-1 rounded-full flex items-center justify-center mr-4 overflow-hidden'>
 
-            <p class='text-white font-bold text-lg'>
-                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-            </p>
+            @if(!auth()->user()->profile_photo_id)
+                <p class='text-white font-bold text-lg'>
+                    {{
+                        strtoupper( substr(auth()->user()->name, 0, 1) )
+                    }}
+                </p>
+            @else
+                <x-cld-image public-id="{{auth()->user()->profile_photo_id}}" width="300" height="300" crop="scale"></x-cld-image>
+            @endif
 
         </div>
 
