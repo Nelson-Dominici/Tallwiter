@@ -11,8 +11,8 @@ use App\Livewire\User\Create as UserCreate;
 
 Route::prefix('users')->group(function() {
 
-    Route::get('edit', Profile::class)->name('users.edit');
     Route::get('create', UserCreate::class)->name('users.create');
+    Route::get('profile/{userId}', Profile::class)->name('users.profile')->middleware('auth');
 
 });
 
