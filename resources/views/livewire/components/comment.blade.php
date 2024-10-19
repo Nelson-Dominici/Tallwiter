@@ -11,20 +11,26 @@
         }
     }'
 >
-    <div class='w-10 h-10 bg-primary mt-1 rounded-full flex items-center justify-center mr-4'>
+    <a wire:navigate href="{{ '/users/profile/' . $post->user->id }}"  class='w-10 h-10 bg-primary mt-1 rounded-full flex items-center justify-center mr-4 overflow-hidden'>
 
-        <p class='text-white font-bold text-lg'>
-            {{
-                strtoupper( substr($post->user->name, 0, 1) )
-            }}
-        </p>
+        @if(!$comment['profile_photo_id'])
+            <p class='text-white font-bold text-lg'>
+                {{
+                    strtoupper( substr(!$comment['name'], 0, 1) )
+                }}
+            </p>
+        @else
+            <x-cld-image public-id="{{$comment['profile_photo_id']}}" width="300" height="300" crop="scale"></x-cld-image>
+        @endif
 
-    </div>
+            </a>
 
     <div class='grow w-min'>
 
         <div class='flex justify-between'>
-            <h3 class='font-semibold text-secondary'>{{$post->user->name}}</h3>
+            <a wire:navigate href="{{ '/users/profile/' . $post->user->id }}"  class='font-semibold text-secondary'>
+                {{$comment['name']}}
+            </a>
 
             @if ($post->user_id == auth()->user()->id)
                 <x-dropdown icon="ellipsis-vertical" static>
