@@ -14,10 +14,15 @@ class Comment extends Component
     public $comment;
     public int $likes_count;
 
+    public string $name;
+    public ?string $profile_photo_id;
+
     public function mount(): void
     {
         $this->liked = $this->comment['liked'];
+        $this->name = $this->comment['name'];
         $this->likes_count = $this->comment['likes_count'];
+        $this->profile_photo_id = $this->comment['profile_photo_id'];
     }
 
     public function handleLike(): void
