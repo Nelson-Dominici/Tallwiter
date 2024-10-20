@@ -19,6 +19,8 @@ class Index extends Component
     {
         $comment['liked'] = 0;
         $comment['likes_count'] = 0;
+        $comment['name'] = auth()->user()->name;
+        $comment['profile_photo_id'] = auth()->user()->profile_photo_id;
 
         $this->comments[] = $comment;
     }
@@ -28,12 +30,15 @@ class Index extends Component
         $userId = auth()->user()->id;
 
         $query = Comment::where('comments.post_id', $this->post->id)
-            ->leftJoin('comments_likes', 'comments.id', '=', 'comments_likes.comment_id')
-            ->select('comments.*',
-                    DB::raw("COUNT(IF(comments_likes.user_id = {$userId}, comments_likes.comment_id, NULL)) AS liked"),
-                    DB::raw("COUNT(comments_likes.comment_id) AS likes_count"))
-            ->groupBy('comments.id')
-            ->orderBy('comments.created_at', 'asc');
+        ->leftJoin('comments_likes', 'comments.id', '=', 'comments_likes.comment_id')
+        ->join('users', 'comments.user_id', '=', 'users.id')
+        ->select('comments.*',
+                 'users.name',
+                 'users.profile_photo_id',
+                 DB::raw("COUNT(IF(comments_likes.user_id = {$userId}, comments_likes.comment_id, NULL)) AS liked"),
+                 DB::raw("COUNT(comments_likes.comment_id) AS likes_count"))
+        ->groupBy('comments.id', 'users.name')
+        ->orderBy('comments.created_at', 'asc');
 
         $this->comments = $query->get()->toArray();
     }
