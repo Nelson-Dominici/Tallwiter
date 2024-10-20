@@ -22,7 +22,8 @@ class User extends Authenticatable
         'password',
         'description',
         'banner_photo_id',
-        'profile_photo_id'
+        'profile_photo_id',
+        'notification'
     ];
 
     /**
