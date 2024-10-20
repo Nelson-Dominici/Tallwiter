@@ -3,8 +3,10 @@
 namespace App\Livewire\User;
 
 use App\Models\Follower;
+use App\Models\Notification;
 use App\Models\Post;
 use App\Models\User;
+use Cloudinary\Transformation\Y;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -28,6 +30,8 @@ class Profile extends Component
 
     public $following = false;
 
+    public $followersCount = 0;
+
     public string $email;
     public string $created_at;
     public null|string $banner_photo_id = null;
@@ -36,7 +40,7 @@ class Profile extends Component
     #[Validate('bail|required|string|min:3|max:255')]
     public string $name;
 
-    #[Validate('bail|string|min:3|max:255')]
+    #[Validate('bail|string|nullable|min:3|max:255')]
     public null|string $description = null;
 
     #[Validate('bail|image|nullable|max:9216')]
@@ -51,8 +55,13 @@ class Profile extends Component
 
         if($user->id !== $userId) {
             $user = User::find($userId);
-            $this->following = Follower::find($userId);
+
+            $result = Follower::where(['user' => auth()->user()->id, 'following' => $userId])->first();
+
+            $this->following = $result ? true : false;
         }
+
+        $this->followersCount = Follower::where('following', $user->id)->count();
 
         $this->profileUserId = $user->id;
 
@@ -63,20 +72,20 @@ class Profile extends Component
 
     function render()
     {
-        $userId = auth()->user()->id;
+        $userId = $this->profileUserId;
 
         $query = Post::with('user')
-        ->leftJoin('posts_likes', 'posts.id', '=', 'posts_likes.post_id')
-        ->join('bookmarks', 'posts.id', '=', 'bookmarks.post_id')  // Alterado para INNER JOIN
-        ->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
-        ->select('posts.*',
-                 DB::raw("SUM(posts_likes.user_id = $userId) AS liked"),
-                 DB::raw("COUNT(DISTINCT posts_likes.id) AS likes_count"),
-                 DB::raw("COUNT(DISTINCT comments.id) AS comments_count"),
-                 DB::raw("SUM(bookmarks.user_id = $userId) AS marked"))
-        ->groupBy('posts.id')
-        ->orderBy('posts.created_at', 'desc');
-
+            ->where('posts.user_id', $userId)
+            ->leftJoin('posts_likes', 'posts.id', '=', 'posts_likes.post_id')
+            ->leftJoin('bookmarks', 'posts.id', '=', 'bookmarks.post_id')
+            ->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
+            ->select('posts.*',
+                    DB::raw("SUM(posts_likes.user_id = $userId) AS liked"),
+                    DB::raw("COUNT(DISTINCT posts_likes.id) AS likes_count"),
+                    DB::raw("COUNT(DISTINCT comments.id) AS comments_count"),
+                    DB::raw("SUM(bookmarks.user_id = $userId) AS marked"))
+            ->groupBy('posts.id')
+            ->orderBy('posts.created_at', 'desc');
 
         $posts = $query->get();
 
@@ -104,14 +113,6 @@ class Profile extends Component
         $this->modal = false;
     }
 
-    public function follow(): void
-    {
-        Follower::create([
-            'user' => auth()->user()->id,
-            'following' => $this->profileUserId
-        ]);
-    }
-
     public function logout()
     {
         auth()->logout();
@@ -124,5 +125,33 @@ class Profile extends Component
         auth()->user()->delete();
 
         return $this->redirect('/auth/login', navigate: true);
+    }
+
+    public function followHandle(): void
+    {
+        if (!$this->following) {
+
+            $message = $this->name.' Started following you';
+
+            Notification::create([
+                'type' => 'follow',
+                'image' => auth()->user()->profile_photo_id,
+                'user_id' => $this->profileUserId,
+                'title' => $message
+            ]);
+
+            User::where('id', $this->profileUserId)->update(['notification' => true]);
+            Follower::create(['user' => auth()->user()->id, 'following' => $this->profileUserId]);
+            $this->following = true;
+            $this->followersCount++;
+            return;
+        }
+
+        User::where('id', $this->profileUserId)->update(['notification' => false]);
+        Follower::where(['user' => auth()->user()->id, 'following' => $this->profileUserId])->delete();
+        Notification::where(['sender_id' => auth()->user()->id, 'user_id' => $this->profileUserId])->delete();
+
+        $this->following = false;
+        $this->followersCount--;
     }
 }
