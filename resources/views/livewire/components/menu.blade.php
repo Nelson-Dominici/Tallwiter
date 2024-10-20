@@ -9,7 +9,7 @@
         <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href='/home'>
 
             @if ($selectButton == 'home')
-                <x-heroicon-c-home class="w-8 text-secondary"/>
+                <x-heroicon-m-home class="w-8 text-secondary"/>
             @else
                 <x-heroicon-o-home class="w-8 text-secondary"/>
             @endif
@@ -18,8 +18,13 @@
 
         </a>
 
-        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href="{{ route('home', ['filter' => 'for-you']) }}">
-            <x-heroicon-o-bell class="w-8 text-secondary"/>
+        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href="{{ route('notifications') }}">
+
+            @if (Route::currentRouteName() == 'bookmarks')
+                <x-heroicon-c-bell class="w-8 text-secondary"/>
+            @else
+                <x-heroicon-o-bell class="w-8 text-secondary"/>
+            @endif
 
             <p class="md:block hidden ml-5 text-xl text-secondary">Notifications</p>
         </a>
@@ -33,6 +38,17 @@
             @endif
 
             <p class="md:block hidden ml-5 text-xl text-secondary">Profile</p>
+        </a>
+
+        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href="{{ route('bookmarks') }}">
+
+            @if (Route::currentRouteName() == 'bookmarks')
+                <x-heroicon-c-bookmark class='w-8 text-secondary'/>
+            @else
+                <x-heroicon-o-bookmark class='w-8 text-secondary'/>
+            @endif
+
+            <p class="md:block hidden ml-5 text-xl text-secondary">Bookmarks</p>
         </a>
 
     </div>
