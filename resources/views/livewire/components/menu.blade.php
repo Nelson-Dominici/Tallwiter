@@ -20,10 +20,19 @@
 
         <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href="{{ route('notifications') }}">
 
-            @if (Route::currentRouteName() == 'bookmarks')
+            @if (Route::currentRouteName() == 'notifications')
                 <x-heroicon-c-bell class="w-8 text-secondary"/>
             @else
-                <x-heroicon-o-bell class="w-8 text-secondary"/>
+
+                <div class="relative">
+                    <x-heroicon-o-bell class="w-8 text-secondary"/>
+
+                    @if (auth()->user()->notification)
+                        <div class="size-3 absolute top-0 left-8 rounded-full mb-4 -ml-1 bg-primary"></div>
+                    @endif
+
+                </div>
+
             @endif
 
             <p class="md:block hidden ml-5 text-xl text-secondary">Notifications</p>
