@@ -53,12 +53,12 @@
             </div>
 
             <h1 class="mt-4 text-slate-500 font-semibold font-normal">
-                <span class="text-secondary">{{$this->followersCount}}</span> follow
+                <span class="text-secondary">{{$this->followersCount}}</span> follows
             </h1>
 
         </div>
 
-        <div class='border-t mt-5 min-h-72 h-fit pt-3'>
+        <div class='border-t mt-5 h-fit pt-3'>
 
             <h1 class='mx-auto border-b-4 border-primary w-fit text-center font-bold text-secondary'>posts</h1>
 
@@ -77,37 +77,40 @@
 
         </div>
 
-        <div class='px-4 py-3 mt-auto border-t'>
+        @if (auth()->user()->id == $this->profileUserId)
 
-            <x-icon name="user" class="h-5 w-5 text-slate-500">
-                <x-slot:right>
-                    <h1 class='font-bold text-slate-500 text-lg'>Logut</h1>
-                </x-slot:right>
-            </x-icon>
+            <div class='px-4 py-3 mt-auto border-t'>
 
-            <p class='text-slate-500'>Press the button to log out of your current account.</p>
+                <x-icon name="user" class="h-5 w-5 text-slate-500">
+                    <x-slot:right>
+                        <h1 class='font-bold text-slate-500 text-lg'>Logut</h1>
+                    </x-slot:right>
+                </x-icon>
 
-            <div class='flex mt-3'>
-                <x-button outline wire:click='logout' text="Logout" color="sky" wire:loading.class='bg-sky-900' wire:target='logout' class='ml-auto focus:!ring-0  w-40'/>
+                <p class='text-slate-500'>Press the button to log out of your current account.</p>
+
+                <div class='flex mt-3'>
+                    <x-button outline wire:click='logout' text="Logout" color="sky" wire:loading.class='bg-sky-900' wire:target='logout' class='ml-auto focus:!ring-0  w-40'/>
+                </div>
+
             </div>
 
-        </div>
+            <div class='px-4 border-y py-2'>
 
-        <div class='px-4 border-y py-2'>
+                <x-icon name="exclamation-circle" class="h-5 w-5 text-slate-500">
+                    <x-slot:right>
+                        <h1 class='font-bold text-slate-500 text-lg'>Delete Account</h1>
+                    </x-slot:right>
+                </x-icon>
 
-            <x-icon name="exclamation-circle" class="h-5 w-5 text-slate-500">
-                <x-slot:right>
-                    <h1 class='font-bold text-slate-500 text-lg'>Delete Account</h1>
-                </x-slot:right>
-            </x-icon>
+                <p class='text-slate-500'>Press the button to permanently delete your Tallwiter account.</p>
 
-            <p class='text-slate-500'>Press the button to permanently delete your Tallwiter account.</p>
+                <div class='flex mt-3'>
+                    <x-button outline wire:click='delete' text="Delete" color="red" wire:loading.class='bg-sky-900' wire:target='delete' class='ml-auto focus:!ring-0  w-40'/>
+                </div>
 
-            <div class='flex mt-3'>
-                <x-button outline wire:click='delete' text="Delete" color="red" wire:loading.class='bg-sky-900' wire:target='delete' class='ml-auto focus:!ring-0  w-40'/>
             </div>
-
-        </div>
+        @endif
 
     </div>
 
