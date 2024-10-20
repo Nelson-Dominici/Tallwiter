@@ -1,7 +1,7 @@
 <div wire:loading.class='opacity-40 bg-gray-200' wire:target='delete()' class='transition-all w-full p-5 border-b flex' x-data='{
     openComments: false,
 }'>
-    <div class='!size-11 bg-primary mt-1 rounded-full flex items-center justify-center mr-4 overflow-hidden'>
+    <a wire:navigate href="{{ '/users/profile/' . $post->user->id }}"  class='!size-11 bg-primary mt-1 rounded-full flex items-center justify-center mr-4 overflow-hidden'>
 
         @if(!$post->user->profile_photo_id)
             <p class='text-white font-bold text-lg'>
@@ -13,7 +13,7 @@
             <x-cld-image public-id="{{$post->user->profile_photo_id}}" width="300" height="300" crop="scale"></x-cld-image>
         @endif
 
-    </div>
+    </a>
 
     <div class='grow w-min'>
 
