@@ -27,9 +27,9 @@
         <div class='pl-4 relative pt-24'>
 
             @if(auth()->user()->id == $this->profileUserId)
-                <x-button text='Edit Profile' outline class='absolute right-3 top-3 bg-primary text-white font-bold' x-on:click="$modalOpen('modal-id')"/>
+                <x-button text='Edit Profile' class='absolute right-3 top-3 bg-primary text-white font-bold' x-on:click="$modalOpen('modal-id')"/>
             @else
-                <x-button text='Follow' outline class='absolute right-3 top-3 bg-primary text-white font-bold'/>
+                <x-button text='{{ $this->following ? "Unfollow" : "Follow" }}' wire:click='followHandle' class='absolute right-3 top-3 bg-primary text-white font-bold'/>
             @endif
 
             <h1 class='text-2xl font-semibold text-secondary'>{{$this->name}}</h1>
@@ -52,11 +52,15 @@
                 </x-icon>
             </div>
 
+            <h1 class="mt-4 text-slate-500 font-semibold font-normal">
+                <span class="text-secondary">{{$this->followersCount}}</span> follow
+            </h1>
+
         </div>
 
         <div class='border-t mt-5 min-h-72 h-fit pt-3'>
 
-            <h1 class='mx-auto border-b-4 border-primary w-fit text-center font-bold text-secondary'>marked</h1>
+            <h1 class='mx-auto border-b-4 border-primary w-fit text-center font-bold text-secondary'>posts</h1>
 
             @foreach ($posts as $post)
 
@@ -66,7 +70,9 @@
 
             @if (!$posts->toArray())
                 <x-heroicon-o-archive-box class="w-24 mx-auto mt-12 text-slate-500"/>
-                <h1 class="text-slate-500 text-xl font-bold text-center">You haven't marked any posts</h1>
+                <h1 class="text-slate-500 text-xl font-bold text-center">
+                    {{auth()->user()->id == $this->profileUserId ? "You haven't marked any posts" : "This user hasn't marked any posts"}}
+                </h1>
             @endif
 
         </div>
