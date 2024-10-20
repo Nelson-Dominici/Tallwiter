@@ -13,17 +13,17 @@
 >
     <a wire:navigate href="{{ '/users/profile/' . $post->user->id }}"  class='w-10 h-10 bg-primary mt-1 rounded-full flex items-center justify-center mr-4 overflow-hidden'>
 
-        @if(!$comment['profile_photo_id'])
+        @if($this->profile_photo_id)
+            <x-cld-image public-id="{{$comment['profile_photo_id']}}" width="300" height="300" crop="scale"></x-cld-image>
+        @else
             <p class='text-white font-bold text-lg'>
                 {{
-                    strtoupper( substr(!$comment['name'], 0, 1) )
+                    strtoupper( substr($comment['name'], 0, 1) )
                 }}
             </p>
-        @else
-            <x-cld-image public-id="{{$comment['profile_photo_id']}}" width="300" height="300" crop="scale"></x-cld-image>
         @endif
 
-            </a>
+    </a>
 
     <div class='grow w-min'>
 
@@ -32,7 +32,7 @@
                 {{$comment['name']}}
             </a>
 
-            @if ($post->user_id == auth()->user()->id)
+            @if ($comment['user_id'] == auth()->user()->id)
                 <x-dropdown icon="ellipsis-vertical" static>
                     <x-dropdown.items @click='deletComment()' class='text-red-500' text='Delete' />
                 </x-dropdown>
