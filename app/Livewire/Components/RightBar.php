@@ -4,6 +4,7 @@ namespace App\Livewire\Components;
 
 use App\Models\Follower;
 use App\Models\Post;
+use App\Models\PostsLike;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -36,15 +37,14 @@ class RightBar extends Component
         });
 
         $hyped_post_id = DB::table('posts_likes')
-            ->select('post_id', DB::raw('COUNT(*) as occurrences'))
-            ->whereDate('created_at', Carbon::today())
+            ->select('post_id', DB::raw('COUNT(post_id) as total'))
             ->groupBy('post_id')
-            ->orderByDesc('occurrences')
+            ->orderByRaw('COUNT(post_id) DESC')
             ->first();
 
         if ($hyped_post_id) {
 
-            $this->hyped_post = Post::find($hyped_post_id->post_id)
+            $this->hyped_post = Post::where('posts.id', $hyped_post_id->post_id)
             ->leftJoin('posts_likes', 'posts.id', '=', 'posts_likes.post_id')
             ->leftJoin('bookmarks', 'posts.id', '=', 'bookmarks.post_id')
             ->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
@@ -56,7 +56,6 @@ class RightBar extends Component
             ->groupBy('posts.id')
             ->orderBy('posts.created_at', 'desc')
             ->first();
-
         }
 
         return view('livewire.components.right-bar');
