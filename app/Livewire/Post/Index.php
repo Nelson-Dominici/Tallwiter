@@ -30,7 +30,7 @@ class Index extends Component
                 $request->path() == 'livewire/update'
             )
         ) {
-            $query =  Post::whereIn('posts.user_id', function($query) use ($userId) {
+            $posts =  Post::whereIn('posts.user_id', function($query) use ($userId) {
                 $query->select('following')
                       ->from('followers')
                       ->where('user', $userId);
@@ -44,12 +44,11 @@ class Index extends Component
                      DB::raw("COUNT(DISTINCT comments.id) AS comments_count"),
                      DB::raw("SUM(bookmarks.user_id = {$userId}) AS marked"))
             ->groupBy('posts.id')
-            ->orderBy('posts.created_at', 'desc');
-
+            ->orderBy('posts.created_at', 'desc')->get();
 
         } else {
 
-            $query = Post::with('user')
+            $posts = Post::with('user')
                 ->leftJoin('posts_likes', 'posts.id', '=', 'posts_likes.post_id')
                 ->leftJoin('bookmarks', 'posts.id', '=', 'bookmarks.post_id')
                 ->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
@@ -59,7 +58,7 @@ class Index extends Component
                         DB::raw("COUNT(DISTINCT comments.id) AS comments_count"),
                         DB::raw("SUM(bookmarks.user_id = {$userId}) AS marked"))
                 ->groupBy('posts.id')
-                ->orderBy('posts.created_at', 'desc');
+                ->orderBy('posts.created_at', 'desc')->get();
         }
 
         if (
@@ -71,8 +70,6 @@ class Index extends Component
         ) {
             $selectedFilter = 'following';
         }
-
-        $posts = $query->simplePaginate(6);
 
         return view('livewire.post.index', compact('posts', 'selectedFilter'));
     }
