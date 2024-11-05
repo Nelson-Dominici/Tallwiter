@@ -19,9 +19,6 @@ class Create extends Component
     #[Validate('bail|required|string|min:3|max:255')]
     public string $text;
 
-    #[Validate('bail|present|boolean|nullable')]
-    public bool $only_followers;
-
     public function create(): void
     {
         $data = $this->validate();
@@ -29,10 +26,6 @@ class Create extends Component
         $data['user_id'] = auth()->user()->id;
 
         $data['text'] = nl2br(trim($data['text']));
-
-        if (is_null($data['only_followers'])) {
-            $data['only_followers'] = false;
-        }
 
         if ($data['photo']) {
             $data['img_secure_url'] = $data['photo']->storeOnCloudinary()->getSecurePath();
