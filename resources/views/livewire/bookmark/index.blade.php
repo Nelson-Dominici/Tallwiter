@@ -23,4 +23,5 @@
 
     </div>
 
+    <livewire:components.right-bar/>
 </div>

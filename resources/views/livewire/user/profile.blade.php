@@ -145,4 +145,7 @@
         </x-button>
 
     </x-modal>
+
+    <livewire:components.right-bar/>
+
 </div>
