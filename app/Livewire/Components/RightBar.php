@@ -28,6 +28,7 @@ class RightBar extends Component
                   ->where('user', $userId);
         })
         ->where('id', '!=', $userId)
+        ->take(3)
         ->get()
         ->map(function($user) {
             $user->following = false;
