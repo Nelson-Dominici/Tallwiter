@@ -7,15 +7,16 @@
         <title>{{ $title ?? 'Page Title' }} / Tallwiter</title>
         <link rel="icon" href="{{asset('/images/favicon-logo.png')}}" type="image/x-icon">
         <tallstackui:script />
+        @vite('resources/css/app.css')
         @vite('resources/css/tailwind.css')
     </head>
-    <body>
+    <body class="flex justify-center overflow-y-scroll">
+
+        {{ $slot }}
 
         @persist('toast')
             <x-toast />
         @endpersist
-
-        {{ $slot }}
 
     </body>
 </html>
