@@ -13,7 +13,7 @@
 >
     <form wire:submit='create' class='flex h-fit border-b p-5'>
 
-        <div class='hidden md:block size-11 bg-primary mt-1 rounded-full flex items-center justify-center mr-4 overflow-hidden'>
+        <div class='hidden md:flex size-11 bg-primary mt-1 rounded-full items-center justify-center mr-4 overflow-hidden'>
 
             @if(!auth()->user()->profile_photo_id)
                 <p class='text-white font-bold text-lg'>
