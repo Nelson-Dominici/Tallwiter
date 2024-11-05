@@ -131,7 +131,7 @@ class Profile extends Component
     {
         if (!$this->following) {
 
-            $message = $this->name.' Started following you';
+            $message = auth()->user()->name.' Started following you';
 
             Notification::create([
                 'type' => 'follow',
@@ -149,7 +149,7 @@ class Profile extends Component
 
         User::where('id', $this->profileUserId)->update(['notification' => false]);
         Follower::where(['user' => auth()->user()->id, 'following' => $this->profileUserId])->delete();
-        Notification::where(['sender_id' => auth()->user()->id, 'user_id' => $this->profileUserId])->delete();
+        Notification::where(['user_id' => $this->profileUserId])->delete();
 
         $this->following = false;
         $this->followersCount--;
