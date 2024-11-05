@@ -13,7 +13,6 @@ class Post extends Model
         'user_id',
         'text',
         'img_secure_url',
-        'only_followers'
     ];
 
     public function user()
