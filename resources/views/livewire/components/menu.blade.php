@@ -6,7 +6,7 @@
             <img class="w-9 h-9" src="{{asset('/images/logo-icon.png')}}">
         </a>
 
-        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href='/home'>
+        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-5 pr-3" wire:navigate href='/home'>
 
             @if ($selectButton == 'home')
                 <x-heroicon-m-home class="w-8 text-secondary"/>
@@ -18,7 +18,7 @@
 
         </a>
 
-        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href="{{ route('notifications') }}">
+        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-5 pr-3" wire:navigate href="{{ route('notifications') }}">
 
             @if (Route::currentRouteName() == 'notifications')
                 <x-heroicon-c-bell class="w-8 text-secondary"/>
@@ -38,7 +38,7 @@
             <p class="md:block hidden ml-5 text-xl text-secondary">Notifications</p>
         </a>
 
-        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href="{{ '/users/profile/' . auth()->user()->id }}">
+        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-5 pr-3" wire:navigate href="{{ '/users/profile/' . auth()->user()->id }}">
 
             @if (Str::is('users/profile/*', $selectButton))
                 <x-heroicon-c-user class='w-8 text-secondary'/>
@@ -49,7 +49,7 @@
             <p class="md:block hidden ml-5 text-xl text-secondary">Profile</p>
         </a>
 
-        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-2 pr-3" wire:navigate href="{{ route('bookmarks') }}">
+        <a class="flex items-center hover:bg-[#EEEEEE] rounded-full transition-all w-fit p-2 mt-5 pr-3" wire:navigate href="{{ route('bookmarks') }}">
 
             @if (Route::currentRouteName() == 'bookmarks')
                 <x-heroicon-c-bookmark class='w-8 text-secondary'/>
