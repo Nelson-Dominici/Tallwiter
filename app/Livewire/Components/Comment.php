@@ -15,7 +15,7 @@ class Comment extends Component
     public int $likes_count;
 
     public string $name;
-    public ?string $profile_photo_id;
+    public ?string $profile_photo_id = null;
 
     public function mount(): void
     {
