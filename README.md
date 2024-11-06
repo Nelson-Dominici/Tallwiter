@@ -38,10 +38,10 @@ https://github.com/user-attachments/assets/fa538aae-8840-4120-83b1-b8eea60cb9e0
 
 <h2>🛠 Technologies</h2>
 
-<li><a href="https://github.com/firebase/php-jwt">Laravel</a></li>
-<li><a href="https://packagist.org/packages/ramsey/uuid">Livewire</a></li>
-<li><a href="https://www.mysql.com/">Alpine.js</a></li>
-<li><a href="https://www.doctrine-project.org/projects/doctrine-orm/en/2.15/index.html">Taillwind.css</a></li>
+<li><a href="https://laravel.com">Laravel</a></li>
+<li><a href="https://livewire.laravel.com">Livewire</a></li>
+<li><a href="https://alpinejs.dev">Alpine.js</a></li>
+<li><a href="https://tailwindcss.com">Taillwind.css</a></li>
 <li><a href="https://tallstackui.com">TallStackUI</a></li>
 <li><a href="https://www.mysql.com/">MySQL</a></li>
 <li><a href="https://www.cloudflare.com/pt-br/">Cloudflare</a></li>
