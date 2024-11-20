@@ -38,6 +38,7 @@ https://github.com/user-attachments/assets/fa538aae-8840-4120-83b1-b8eea60cb9e0
 
 <h2>🛠 Technologies</h2>
 
+<li><a href="https://www.docker.com">Docker</a></li>
 <li><a href="https://laravel.com">Laravel</a></li>
 <li><a href="https://livewire.laravel.com">Livewire</a></li>
 <li><a href="https://alpinejs.dev">Alpine.js</a></li>
