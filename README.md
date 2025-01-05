@@ -45,5 +45,5 @@ https://github.com/user-attachments/assets/fa538aae-8840-4120-83b1-b8eea60cb9e0
 <li><a href="https://tailwindcss.com">Taillwind.css</a></li>
 <li><a href="https://tallstackui.com">TallStackUI</a></li>
 <li><a href="https://www.mysql.com/">MySQL</a></li>
-<li><a href="https://www.cloudflare.com/pt-br/">Cloudflare</a></li>
+<li><a href="https://cloudinary.com">Cloudinary</a></li>
 <li><a href="https://blade-ui-kit.com">Blade UI Kit</a></li>
